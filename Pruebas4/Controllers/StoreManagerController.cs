@@ -1,8 +1,11 @@
-﻿using System.Data.Entity;
+﻿using System;
+using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Web.Mvc;
 using Pruebas4.Data.Models;
+using Pruebas4.Extensions;
 
 namespace Pruebas4.Controllers
 {
@@ -120,6 +123,20 @@ namespace Pruebas4.Controllers
             return RedirectToAction("Index");
         }
 
+        public ActionResult Search(string q)
+        {
+            List<Album> albums = new List<Album>();
+            if (q == null)
+            {
+                return View(albums);
+            }
+            else
+            {
+                albums = db.Albums.Include("Artist").Where(a => a.Title.Contains(q)).Take(10).ToList();
+                return View("SearchResult", albums);
+            }
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)
@@ -127,6 +144,12 @@ namespace Pruebas4.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        public ActionResult PrintExcel()
+        {
+            var albums = db.Albums.Include(a => a.Artist).Include(a => a.Genre);
+            return new ExcelResult("test", albums.ToList());
         }
     }
 }

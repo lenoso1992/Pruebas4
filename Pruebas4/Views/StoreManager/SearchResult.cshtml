@@ -1,10 +1,7 @@
 ﻿@model IEnumerable<Album>
-
-@{
-    ViewBag.Title = "Search Result";
-}
-
+@{ ViewBag.Title = "Resultado búsqueda"; }
 <h2>Resultado búsqueda</h2>
+
 <table class="table table-condensed table-striped">
     <tr>
         <th>Artist</th>
@@ -20,3 +17,5 @@
         </tr>
     }
 </table>
+
+<p>@Html.ActionLink("Volver", "Search", "StoreManager")</p>

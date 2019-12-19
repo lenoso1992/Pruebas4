@@ -1,0 +1,14 @@
+﻿@model IEnumerable<Album>
+
+@{
+    ViewBag.Title = "Búsqueda";
+}
+
+<h2>Búsqueda</h2>
+
+@using (Html.BeginForm("Search", "StoreManager", FormMethod.Get,new { target = "_blank" }))
+{
+    <input type="text" name="q" />
+    <input type="submit" value="Search" />
+}
+
